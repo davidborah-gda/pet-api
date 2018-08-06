@@ -27,6 +27,13 @@ server.use(bodyParser.urlencoded({ extended: true }));  //accept html form data
 //routes
 server.use(petRouter);
 
+//404 handler
+server.use((req, res,) => {
+    res.status(404).json({
+        msg: "Resource not found"
+    });
+});
+
 // kick it off
 server.listen(port, () => {
     console.log(`Now listening on port: ${port}`);
