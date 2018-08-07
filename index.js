@@ -5,6 +5,8 @@ const mongoose = require ('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const errorHandler = require('.middlewares/errorHandler');
+const notFoundHandler = require('./middlewares/404');
 
 //setup environment variables
 dotenv.config();
@@ -28,11 +30,10 @@ server.use(bodyParser.urlencoded({ extended: true }));  //accept html form data
 server.use(petRouter);
 
 //404 handler
-server.use((req, res,) => {
-    res.status(404).json({
-        msg: "Resource not found"
-    });
-});
+server.use(notFoundHandler);
+
+//error handler
+server.use(errorHandler);
 
 // kick it off
 server.listen(port, () => {
